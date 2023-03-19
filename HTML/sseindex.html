@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <title> Real Time Events Demo</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
+    <style> 
+        .navbar{
+            min-height: 80px;
+            }
+            .navbar-brand{
+                margin: auto;
+                font-size: 2.6rem;
+            }       
+            .panel{
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            h3{
+                color: blue;
+            }
+            .pstyle{
+                font: size 2rem;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+    </style>
+    <script>
+
+        $(document).ready(function(){
+
+            var urlEndPoint = 'http://localhost:6033/subscribe';
+            var eventSource = new EventSource(urlEndPoint);
+
+            eventSource.addEventListener("latestNews", function(event){
+                var articleData = JSON.parse(event.data);
+                addBlock(articleData.title, articleData.text);
+
+                //console.log(event.data)
+            })
+        })
+
+        evtSource.addEventListener('error', function(event){
+            console.log("Error :" + event.currentTarget.readyState)
+
+            if(event.currentTarget.readyState == EventSource.CLOSED){
+            }
+            else{
+                evtSource.close();
+            }
+            
+        })
+
+        window.onbeforeunload = function (){
+            evt
+        }
+
+        function addBlock(title, text) {
+            var a = document.createElement("article");
+            var h = document.createElement("H3")
+            var t = document.createTextNode(title);
+            h.appendChild(t);
+
+            var para = document.createElement("P");
+                para.innerHTML= text;
+            a.appendChild(h);
+            a.appendChild(para);
+            document.getElementById("pack").appendChild(a);
+        }
+
+    </script>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="navbar-brand" href="#">Last New Here</div>
+            </div>            
+        </div>
+    </nav>
+    <div class="container pstyle text-center" id="pack">
+        <div class="panel panel-primary">
+            News TimeLine
+        </div>            
+    </div>
+
+</html>
