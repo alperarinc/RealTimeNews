@@ -29,7 +29,9 @@
 
         $(document).ready(function(){
 
-            var urlEndPoint = 'http://localhost:6033/subscribe';
+            var userID = Math.floor((Math.random()* 1000) + 1)
+            $("#userspan").text(userID);
+            var urlEndPoint = 'http://localhost:6033/subscribe?userID' + userID;
             var eventSource = new EventSource(urlEndPoint);
 
             eventSource.addEventListener("latestNews", function(event){
@@ -52,7 +54,7 @@
         })
 
         window.onbeforeunload = function (){
-            evt
+            evtSource.close();
         }
 
         function addBlock(title, text) {
